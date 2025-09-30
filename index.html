@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsHub - Modern News Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #e74c3c;
+            --text-light: #666;
+            --border-color: #e0e0e0;
+            --background-light: #f8f9fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-color);
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--background-light);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+        }
+
+        .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            padding: 0 0.5rem;
+            width: 200px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Breaking News Banner */
+        .breaking-news {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .breaking-label {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-headline {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .main-headline:hover {
+            transform: translateY(-4px);
+        }
+
+        .main-headline img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .headline-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
+            padding: 2rem;
+        }
+
+        .headline-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .side-headlines {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .side-article {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .side-article:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .side-article h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .side-article p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+        }
+
+        .view-all {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-category {
+            color: var(--accent-color);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-content h3 {
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Article Reader Modal */
+        .article-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .article-reader {
+            background: white;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .reader-header {
+            position: relative;
+        }
+
+        .reader-header img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .reader-content {
+            padding: 3rem;
+        }
+
+        .reader-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .reader-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        .article-body {
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero-section {
+                grid-template-columns: 1fr;
+            }
+
+            .headline-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reader-content {
+                padding: 1.5rem;
+            }
+
+            .reader-content h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">NewsHub</div>
+            <nav>
+                <ul>
+                    <li><a href="#" data-category="all">Home</a></li>
+                    <li><a href="#" data-category="politics">Politics</a></li>
+                    <li><a href="#" data-category="technology">Technology</a></li>
+                    <li><a href="#" data-category="business">Business</a></li>
+                    <li><a href="#" data-category="sports">Sports</a></li>
+                    <li><a href="#" data-category="entertainment">Entertainment</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Search news...">
+                <span>🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Breaking News -->
+        <div class="breaking-news">
+            <span class="breaking-label">Breaking</span>
+            <span id="breaking-text">Major tech company announces groundbreaking AI advancement</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="main-headline" onclick="openArticle('main')">
+                <img src="https://picsum.photos/800/400?random=1" alt="Main headline">
+                <div class="headline-content">
+                    <h1>Global Climate Summit Reaches Historic Agreement on Carbon Emissions</h1>
+                    <div class="meta-info">
+                        <span>Politics</span>
+                        <span>•</span>
+                        <span>2 hours ago</span>
+                        <span>•</span>
+                        <span>By Sarah Johnson</span>
+                    </div>
+                </div>
+            </div>
+            <div class="side-headlines">
+                <div class="side-article" onclick="openArticle('side1')">
+                    <h3>Stock Markets Rally on Positive Economic Data</h3>
+                    <p>Major indices reach new highs as investors respond to latest employment figures...</p>
+                    <div class="meta-info">
+                        <span>Business • 3 hours ago</span>
+                    </div>
+                </div>
+                <div class="side-article" onclick="openArticle('side2')">
+                    <h3>Revolutionary Battery Technology Could Transform EVs</h3>
+                    <p>Scientists develop new solid-state battery with 10x capacity...</p>
+                    <div class="meta-info">
+                        <span>Technology • 4 hours ago</span>
+                    </div>
+                </div>
+                <div class="side-article" onclick="openArticle('side3')">
+                    <h3>Championship Finals Set After Dramatic Semifinals</h3>
+                    <p>Underdogs advance in stunning upset victories...</p>
+                    <div class="meta-info">
+                        <span>Sports • 5 hours ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Sections -->
+        <div class="category-section">
+            <div class="section-header">
+                <h2>Technology</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="articles-grid" id="tech-articles">
+                <!-- Articles will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="section-header">
+                <h2>Business</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="articles-grid" id="business-articles">
+                <!-- Articles will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Reader Modal -->
+    <div class="article-modal" id="articleModal">
+        <div class="article-reader">
+            <div class="reader-header">
+                <img id="readerImage" src="" alt="Article image">
+                <button class="close-button" onclick="closeArticle()">×</button>
+            </div>
+            <div class="reader-content">
+                <h1 id="readerTitle"></h1>
+                <div class="reader-meta">
+                    <span id="readerCategory"></span>
+                    <span id="readerAuthor"></span>
+                    <span id="readerTime"></span>
+                </div>
+                <div class="article-body" id="readerBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample article data
+        const articles = {
+            technology: [
+                {
+                    title: "AI Breakthrough: New Model Surpasses Human Performance",
+                    excerpt: "Researchers announce a revolutionary AI system that demonstrates unprecedented capabilities...",
+                    category: "Technology",
+                    author: "Dr. Emily Chen",
+                    time: "1 hour ago",
+                    image: "https://picsum.photos/400/300?random=10"
+                },
+                {
+                    title: "Quantum Computing Milestone Achieved",
+                    excerpt: "Tech giant successfully demonstrates 1000-qubit quantum processor...",
+                    category: "Technology",
+                    author: "Michael Roberts",
+                    time: "3 hours ago",
+                    image: "https://picsum.photos/400/300?random=11"
+                                  },
+                {
+                    title: "5G Networks Expand to Rural Areas",
+                    excerpt: "Major telecommunications companies announce plans to bring high-speed internet to underserved communities...",
+                    category: "Technology",
+                    author: "Lisa Wang",
+                    time: "5 hours ago",
+                    image: "https://picsum.photos/400/300?random=12"
+                }
+            ],
+            business: [
+                {
+                    title: "Tech Giants Report Record Quarterly Earnings",
+                    excerpt: "Major technology companies exceed analyst expectations with strong Q3 results...",
+                    category: "Business",
+                    author: "James Miller",
+                    time: "2 hours ago",
+                    image: "https://picsum.photos/400/300?random=20"
+                },
+                {
+                    title: "Global Supply Chain Shows Signs of Recovery",
+                    excerpt: "Shipping delays decrease as ports implement new efficiency measures...",
+                    category: "Business",
+                    author: "Maria Garcia",
+                    time: "4 hours ago",
+                    image: "https://picsum.photos/400/300?random=21"
+                },
+                {
+                    title: "Cryptocurrency Market Sees Major Shifts",
+                    excerpt: "Bitcoin and other digital currencies experience significant volatility amid regulatory changes...",
+                    category: "Business",
+                    author: "David Kim",
+                    time: "6 hours ago",
+                    image: "https://picsum.photos/400/300?random=22"
+                }
+            ]
+        };
+
+        // Full article content
+        const fullArticles = {
+            main: {
+                title: "Global Climate Summit Reaches Historic Agreement on Carbon Emissions",
+                category: "Politics",
+                author: "Sarah Johnson",
+                time: "2 hours ago",
+                image: "https://picsum.photos/800/400?random=1",
+                content: `
+                    <p>In a groundbreaking development at the Global Climate Summit, world leaders have reached a historic agreement on carbon emissions reduction that could reshape the future of environmental policy worldwide.</p>
+                    
+                    <p>The agreement, signed by representatives from over 190 countries, sets ambitious targets for carbon neutrality by 2050 and includes specific milestones for the next decade. This marks the most comprehensive climate accord since the Paris Agreement of 2015.</p>
+                    
+                    <p>"This is a pivotal moment in our fight against climate change," said UN Secretary-General during the closing ceremony. "The commitments made today demonstrate that the international community is ready to take decisive action."</p>
+                    
+                    <p>Key provisions of the agreement include mandatory emissions reporting, financial support for developing nations transitioning to renewable energy, and penalties for countries that fail to meet their targets. The accord also establishes a $100 billion annual fund to support climate adaptation efforts in vulnerable regions.</p>
+                    
+                    <p>Environmental groups have largely praised the agreement, though some argue that the targets don't go far enough. "While this is certainly progress, we need even more aggressive action to prevent catastrophic warming," said a spokesperson for the Global Climate Alliance.</p>
+                    
+                    <p>The agreement will take effect once ratified by at least 55 countries representing 55% of global emissions. Early indications suggest that major emitters, including the United States, China, and the European Union, are prepared to move forward with ratification.</p>
+                `
+            },
+            side1: {
+                title: "Stock Markets Rally on Positive Economic Data",
+                category: "Business",
+                author: "Robert Chen",
+                time: "3 hours ago",
+                image: "https://picsum.photos/800/400?random=2",
+                content: `
+                    <p>Global stock markets surged today following the release of better-than-expected economic data, with major indices posting their biggest gains in months.</p>
+                    
+                    <p>The S&P 500 climbed 2.3%, while the Dow Jones Industrial Average gained 450 points. Technology stocks led the rally, with the Nasdaq Composite jumping 3.1%. European and Asian markets also posted strong gains.</p>
+                    
+                    <p>The rally was triggered by new employment figures showing unemployment at its lowest level in two years, combined with inflation data suggesting price pressures may be easing. This has raised hopes that central banks might pause their aggressive interest rate hikes.</p>
+                    
+                    <p>"Today's data suggests the economy is finding a sweet spot - strong growth without excessive inflation," said chief economist at Global Investment Partners. "This is exactly what investors have been hoping to see."</p>
+                `
+            }
+        };
+
+        // Function to create article cards
+        function createArticleCard(article) {
+            return `
+                <div class="article-card" onclick="openArticle('${article.title}')">
+                    <img src="${article.image}" alt="${article.title}">
+                    <div class="article-content">
+                        <div class="article-category">${article.category}</div>
+                        <h3>${article.title}</h3>
+                        <p>${article.excerpt}</p>
+                        <div class="article-meta">
+                            <span>${article.author}</span>
+                            <span>${article.time}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Populate article sections
+        function populateArticles() {
+            const techSection = document.getElementById('tech-articles');
+            const businessSection = document.getElementById('business-articles');
+            
+            techSection.innerHTML = articles.technology.map(article => createArticleCard(article)).join('');
+            businessSection.innerHTML = articles.business.map(article => createArticleCard(article)).join('');
+        }
+
+        // Open article modal
+        function openArticle(articleId) {
+            const modal = document.getElementById('articleModal');
+            const article = fullArticles[articleId] || fullArticles.main;
+            
+            document.getElementById('readerImage').src = article.image;
+            document.getElementById('readerTitle').textContent = article.title;
+            document.getElementById('readerCategory').textContent = article.category;
+            document.getElementById('readerAuthor').textContent = `By ${article.author}`;
+            document.getElementById('readerTime').textContent = article.time;
+            document.getElementById('readerBody').innerHTML = article.content;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close article modal
+        function closeArticle() {
+            const modal = document.getElementById('articleModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('articleModal');
+            if (event.target === modal) {
+                closeArticle();
+            }
+        }
+
+        // Breaking news rotation
+        const breakingNews = [
+            "Major tech company announces groundbreaking AI advancement",
+            "Stock markets reach all-time highs amid economic optimism",
+            "Scientists discover potential cure for rare disease",
+            "International space station welcomes new crew members"
+        ];
+
+        let currentBreaking = 0;
+        function rotateBreakingNews() {
+            const breakingText = document.getElementById('breaking-text');
+            currentBreaking = (currentBreaking + 1) % breakingNews.length;
+            breakingText.style.opacity = '0';
+            setTimeout(() => {
+                breakingText.textContent = breakingNews[currentBreaking];
+                breakingText.style.opacity = '1';
+            }, 300);
+        }
+
+        // Search functionality
+        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.toLowerCase();
+                alert(`Searching for: ${searchTerm}`);
+                // In a real implementation, this would filter articles
+            }
+        });
+
+        // Category navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('data-category');
+                alert(`Navigating to ${category} section`);
+                // In a real implementation, this would filter/load category-specific content
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            populateArticles();
+            setInterval(rotateBreakingNews, 5000);
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
