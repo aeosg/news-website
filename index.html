@@ -677,7 +677,7 @@
                 </ul>
             </nav>
             <div class="search-bar">
-                <input type="text" placeholder="Search news...">
+                <input type="text" placeholder="Search news..." aria-label="Search news">
                 <span>🔍</span>
             </div>
         </div>
@@ -773,7 +773,7 @@
                 <div class="sidebar-widget">
                     <h3>Newsletter</h3>
                     <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-light);">Subscribe to our newsletter for the latest updates.</p>
-                    <input type="email" placeholder="Your email address" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                    <input type="email" placeholder="Your email address" aria-label="Your email address" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
                     <button style="width: 100%; padding: 0.5rem; background: var(--accent-color); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Subscribe</button>
                 </div>
             </aside>
@@ -785,7 +785,7 @@
         <div class="article-reader">
             <div class="reader-header">
                 <img id="readerImage" src="" alt="Article image">
-                <button class="close-button" onclick="closeArticle()">×</button>
+                <button class="close-button" onclick="closeArticle()" aria-label="Close article">×</button>
             </div>
             <div class="reader-content">
                 <h1 id="readerTitle"></h1>
@@ -804,9 +804,9 @@
                         </div>
                     </div>
                     <div class="social-share">
-                        <button class="share-btn" title="Share on Twitter">𝕏</button>
-                        <button class="share-btn" title="Share on Facebook">f</button>
-                        <button class="share-btn" title="Share via Email">✉</button>
+                        <button class="share-btn" title="Share on Twitter" aria-label="Share on Twitter">𝕏</button>
+                        <button class="share-btn" title="Share on Facebook" aria-label="Share on Facebook">f</button>
+                        <button class="share-btn" title="Share via Email" aria-label="Share via Email">✉</button>
                     </div>
                 </div>
                 <div class="article-body" id="readerBody"></div>
@@ -845,7 +845,7 @@
                 <h3>Newsletter</h3>
                 <p>Subscribe to get the latest news delivered to your inbox daily.</p>
                 <div class="footer-newsletter">
-                    <input type="email" placeholder="Email Address">
+                    <input type="email" placeholder="Email Address" aria-label="Email Address">
                     <button>Subscribe</button>
                 </div>
             </div>
