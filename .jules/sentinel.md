@@ -1,0 +1,4 @@
+## 2024-10-13 - [HIGH] XSS Vulnerability in Article Card Generation
+**Vulnerability:** The application was vulnerable to Cross-Site Scripting (XSS) because it dynamically generated HTML for article cards using string interpolation (`createArticleCard` function) and injected it directly into the DOM using `innerHTML` without proper sanitization.
+**Learning:** Building HTML structures using template literals and `.innerHTML` with unsanitized data is a high risk for XSS if that data ever includes user input or external, untrusted content.
+**Prevention:** Always escape HTML entities (like `<`, `>`, `&`, `"`, `'`) before interpolating dynamic text into HTML strings, or avoid `innerHTML` by using safer alternatives like `.textContent` and DOM manipulation APIs (e.g., `document.createElement`). An `escapeHTML` utility has been introduced as a pattern for this project.
