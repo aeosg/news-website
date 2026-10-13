@@ -1,0 +1,3 @@
+## 2024-10-13 - Added aria-labels to icon-only buttons and unlabelled inputs
+**Learning:** Found several icon-only buttons and unlabelled input fields in `index.html` that are inaccessible to screen reader users because they don't have explicit text. Specifically, the search input, modal close button, share buttons, and newsletter inputs were lacking context.
+**Action:** Always ensure that interactive elements like inputs and buttons have accessible names, either through visible text, an associated `<label>`, or an `aria-label` attribute when visually hidden. Added `aria-label` to these elements to provide necessary context for screen readers.
